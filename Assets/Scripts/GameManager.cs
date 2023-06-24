@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Experimental.GlobalIllumination;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -14,11 +15,13 @@ public class GameManager : MonoBehaviour
     private Camera mainCamera;
     private GameObject clickedObj;
     private GameObject[] selectedObjs = new GameObject[0];
+    private Text objUIText;
 
     // Start is called before the first frame update
     void Start()
     {
         mainCamera = Camera.main;
+        objUIText = transform.Find("Canvas").Find("Text").GetComponent<Text>();
     }
 
     // Update is called once per frame
@@ -71,5 +74,10 @@ public class GameManager : MonoBehaviour
         }
         
         selectedObjs = new GameObject[0];
+    }
+
+    private void SetObjUI()
+    {
+
     }
 }
