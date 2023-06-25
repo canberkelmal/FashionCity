@@ -21,17 +21,10 @@ public class ObjSc : MonoBehaviour
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         SetObj();
     }
-    private void FixedUpdate()
-    { 
-        GetComponent<BoxCollider2D>().layerOverridePriority = -(int)transform.position.y * 5; 
-    }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Obj") || collision.gameObject.CompareTag("Board"))
-        {
-            GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-        }
+        GetComponent<BoxCollider2D>().layerOverridePriority = -(int)(transform.position.y * 25);
     }
     private void OnMouseDown()
     {
@@ -73,19 +66,23 @@ public class ObjSc : MonoBehaviour
 
     public void SetCondition(int condition)
     {
+        transform.Find("Stroke").gameObject.SetActive(false);
         switch (condition)
         {
             case 0: // Default state
                 isSelected = false;
                 GetComponent<SpriteRenderer>().color = defColor;
+                transform.Find("Stroke").gameObject.SetActive(false);
                 break;
             case 1: // Clicked state
                 isSelected = true;
                 GetComponent<SpriteRenderer>().color = Color.red;
+                transform.Find("Stroke").gameObject.SetActive(true);
                 break;
             case 2: // Selected state
-                isSelected = true;
+                isSelected = true; 
                 GetComponent<SpriteRenderer>().color = Color.yellow;
+                transform.Find("Stroke").gameObject.SetActive(true); 
                 break;
         }
     }

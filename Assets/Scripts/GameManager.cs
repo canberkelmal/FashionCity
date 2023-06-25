@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     public Transform objs;
     public LayerMask objLayerMask;
     public Color colorA, colorB, colorC;
+    public float selectVibrateDur = 0.2f;
 
     [NonSerialized]
     public int clickedObjId = 0;
@@ -66,11 +67,13 @@ public class GameManager : MonoBehaviour
 
     private void AddSelectedObjsArray(GameObject obj)
     {
+        VibrateForSeconds(selectVibrateDur);
         SetSelectables(obj.transform);
         int newSize = (selectedObjs != null) ? selectedObjs.Length + 1 : 1;
         Array.Resize(ref selectedObjs, newSize);
 
         selectedObjs[newSize - 1] = obj;
+
     }
 
     private void ReleaseInput()
@@ -135,12 +138,11 @@ public class GameManager : MonoBehaviour
     private void SpawnObj(Vector3 refPoint)
     {
         Instantiate(objPrefab, refPoint + Vector3.up * 6f, Quaternion.identity, objs);
-
     }
 
     private void Initialize()
     {
-        Vector2 targetSpawnPoint = objs.GetChild(0).position + Vector3.up*0.5f;
+        Vector2 targetSpawnPoint = objs.GetChild(0).position + Vector3.up*0.6f;
         float startX = targetSpawnPoint.x;
         for (int i = 0; i < 10;  i++)
         {
@@ -149,10 +151,22 @@ public class GameManager : MonoBehaviour
                 Instantiate(objPrefab, targetSpawnPoint, Quaternion.identity, objs);
                 targetSpawnPoint += Vector2.right * 0.5f;
             }
-            targetSpawnPoint += Vector2.up * 0.5f;
+            targetSpawnPoint += Vector2.up * 0.6F;
             targetSpawnPoint.x = startX;
         }
         //Instantiate(objPrefab,);
+    }
+
+    private void VibrateForSeconds(float duration)
+    {
+        Handheld.Vibrate();
+        Invoke("StopVibration", duration);
+
+    }
+
+    private void StopVibration()
+    {
+        Handheld.Vibrate();
     }
 
     // Reload the current scene to restart the game
