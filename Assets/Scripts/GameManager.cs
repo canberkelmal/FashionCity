@@ -1,27 +1,32 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.Experimental.GlobalIllumination;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
     public Transform objs;
+    public LayerMask objLayerMask;
+    public Color colorA, colorB, colorC;
 
     [NonSerialized]
     public int clickedObjId = 0;
+    [NonSerialized]
+    public Transform[] selectables = new Transform[0];
 
     private Camera mainCamera;
     private GameObject clickedObj;
     private GameObject[] selectedObjs = new GameObject[0];
-    private Text objUIText;
+
 
     // Start is called before the first frame update
     void Start()
     {
         mainCamera = Camera.main;
-        objUIText = transform.Find("Canvas").Find("Text").GetComponent<Text>();
     }
 
     // Update is called once per frame
@@ -35,6 +40,12 @@ public class GameManager : MonoBehaviour
         if (Input.GetMouseButtonUp(0))
         {
             ReleaseInput();
+        }
+
+        // Restart the game when the "R" key is pressed
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            Restart();
         }
     }
 
@@ -60,6 +71,7 @@ public class GameManager : MonoBehaviour
 
     private void AddSelectedObjsArray(GameObject obj)
     {
+        SetSelectables(obj.transform);
         int newSize = (selectedObjs != null) ? selectedObjs.Length + 1 : 1;
         Array.Resize(ref selectedObjs, newSize);
 
@@ -72,12 +84,54 @@ public class GameManager : MonoBehaviour
         {
             obj.GetComponent<ObjSc>().SetCondition(0);
         }
+
+        if(selectedObjs.Length >= 2)
+        {
+            DestroySelecteds();
+        }
+        else
+        {
+            selectedObjs = new GameObject[0];
+        }
         
+    }
+
+    private void DestroySelecteds()
+    {
+        foreach (GameObject obj in selectedObjs)
+        {
+            Destroy(obj);
+        }
+
         selectedObjs = new GameObject[0];
     }
 
-    private void SetObjUI()
+    private void SetSelectables(Transform checkedObj)
     {
+        Collider2D[] selectablesColliders = Physics2D.OverlapCircleAll(checkedObj.position, 0.3f, objLayerMask);
+        selectables = new Transform[selectablesColliders.Length];
+        for (int i = 0; i < selectablesColliders.Length; i++)
+        {
+            selectables[i] = selectablesColliders[i].transform;
+        }
+    }
 
+    public bool CheckSelectable(Transform obj)
+    {
+        bool r = false;
+        foreach(Transform checkingObj  in selectables)
+        {
+            if(checkingObj == obj)
+            {
+                r = true;
+            }
+        }
+        return r;
+    }
+
+    // Reload the current scene to restart the game
+    public void Restart()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
