@@ -25,6 +25,14 @@ public class ObjSc : MonoBehaviour
     { 
         GetComponent<BoxCollider2D>().layerOverridePriority = -(int)transform.position.y * 5; 
     }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Obj") || collision.gameObject.CompareTag("Board"))
+        {
+            GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+        }
+    }
     private void OnMouseDown()
     {
         if(!isSelected)

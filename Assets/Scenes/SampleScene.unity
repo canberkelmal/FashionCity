@@ -135,14 +135,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Obj (1)
       objectReference: {fileID: 0}
-    - target: {fileID: 3075774763311826097, guid: 8703452b5f735d5488751bc3c127f8d1, type: 3}
-      propertyPath: m_Layer
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 3317278809850616235, guid: 8703452b5f735d5488751bc3c127f8d1, type: 3}
-      propertyPath: m_Layer
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 4491735885245469364, guid: 8703452b5f735d5488751bc3c127f8d1, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -187,22 +179,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6002996138025522953, guid: 8703452b5f735d5488751bc3c127f8d1, type: 3}
-      propertyPath: m_Name
-      value: Text
-      objectReference: {fileID: 0}
-    - target: {fileID: 6002996138025522953, guid: 8703452b5f735d5488751bc3c127f8d1, type: 3}
-      propertyPath: m_Layer
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 7131371705249575224, guid: 8703452b5f735d5488751bc3c127f8d1, type: 3}
-      propertyPath: m_SpriteTilingProperty.drawMode
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7253605555058741698, guid: 8703452b5f735d5488751bc3c127f8d1, type: 3}
-      propertyPath: m_Mass
-      value: 0.225
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -219,14 +195,6 @@ PrefabInstance:
     - target: {fileID: 3075774763311826097, guid: 8703452b5f735d5488751bc3c127f8d1, type: 3}
       propertyPath: m_Name
       value: Obj (5)
-      objectReference: {fileID: 0}
-    - target: {fileID: 3075774763311826097, guid: 8703452b5f735d5488751bc3c127f8d1, type: 3}
-      propertyPath: m_Layer
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 3317278809850616235, guid: 8703452b5f735d5488751bc3c127f8d1, type: 3}
-      propertyPath: m_Layer
-      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4491735885245469364, guid: 8703452b5f735d5488751bc3c127f8d1, type: 3}
       propertyPath: m_RootOrder
@@ -271,22 +239,6 @@ PrefabInstance:
     - target: {fileID: 4491735885245469364, guid: 8703452b5f735d5488751bc3c127f8d1, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6002996138025522953, guid: 8703452b5f735d5488751bc3c127f8d1, type: 3}
-      propertyPath: m_Name
-      value: Text
-      objectReference: {fileID: 0}
-    - target: {fileID: 6002996138025522953, guid: 8703452b5f735d5488751bc3c127f8d1, type: 3}
-      propertyPath: m_Layer
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 7131371705249575224, guid: 8703452b5f735d5488751bc3c127f8d1, type: 3}
-      propertyPath: m_SpriteTilingProperty.drawMode
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7253605555058741698, guid: 8703452b5f735d5488751bc3c127f8d1, type: 3}
-      propertyPath: m_Mass
-      value: 0.225
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -957,14 +909,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Obj (6)
       objectReference: {fileID: 0}
-    - target: {fileID: 3075774763311826097, guid: 8703452b5f735d5488751bc3c127f8d1, type: 3}
-      propertyPath: m_Layer
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 3317278809850616235, guid: 8703452b5f735d5488751bc3c127f8d1, type: 3}
-      propertyPath: m_Layer
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 4491735885245469364, guid: 8703452b5f735d5488751bc3c127f8d1, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -1009,22 +953,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6002996138025522953, guid: 8703452b5f735d5488751bc3c127f8d1, type: 3}
-      propertyPath: m_Name
-      value: Text
-      objectReference: {fileID: 0}
-    - target: {fileID: 6002996138025522953, guid: 8703452b5f735d5488751bc3c127f8d1, type: 3}
-      propertyPath: m_Layer
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 7131371705249575224, guid: 8703452b5f735d5488751bc3c127f8d1, type: 3}
-      propertyPath: m_SpriteTilingProperty.drawMode
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7253605555058741698, guid: 8703452b5f735d5488751bc3c127f8d1, type: 3}
-      propertyPath: m_Mass
-      value: 0.225
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1041,14 +969,6 @@ PrefabInstance:
     - target: {fileID: 3075774763311826097, guid: 8703452b5f735d5488751bc3c127f8d1, type: 3}
       propertyPath: m_Name
       value: Obj (3)
-      objectReference: {fileID: 0}
-    - target: {fileID: 3075774763311826097, guid: 8703452b5f735d5488751bc3c127f8d1, type: 3}
-      propertyPath: m_Layer
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 3317278809850616235, guid: 8703452b5f735d5488751bc3c127f8d1, type: 3}
-      propertyPath: m_Layer
-      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4491735885245469364, guid: 8703452b5f735d5488751bc3c127f8d1, type: 3}
       propertyPath: m_RootOrder
@@ -1093,22 +1013,6 @@ PrefabInstance:
     - target: {fileID: 4491735885245469364, guid: 8703452b5f735d5488751bc3c127f8d1, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6002996138025522953, guid: 8703452b5f735d5488751bc3c127f8d1, type: 3}
-      propertyPath: m_Name
-      value: Text
-      objectReference: {fileID: 0}
-    - target: {fileID: 6002996138025522953, guid: 8703452b5f735d5488751bc3c127f8d1, type: 3}
-      propertyPath: m_Layer
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 7131371705249575224, guid: 8703452b5f735d5488751bc3c127f8d1, type: 3}
-      propertyPath: m_SpriteTilingProperty.drawMode
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7253605555058741698, guid: 8703452b5f735d5488751bc3c127f8d1, type: 3}
-      propertyPath: m_Mass
-      value: 0.225
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1318,14 +1222,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Obj (2)
       objectReference: {fileID: 0}
-    - target: {fileID: 3075774763311826097, guid: 8703452b5f735d5488751bc3c127f8d1, type: 3}
-      propertyPath: m_Layer
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 3317278809850616235, guid: 8703452b5f735d5488751bc3c127f8d1, type: 3}
-      propertyPath: m_Layer
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 4491735885245469364, guid: 8703452b5f735d5488751bc3c127f8d1, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -1369,22 +1265,6 @@ PrefabInstance:
     - target: {fileID: 4491735885245469364, guid: 8703452b5f735d5488751bc3c127f8d1, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6002996138025522953, guid: 8703452b5f735d5488751bc3c127f8d1, type: 3}
-      propertyPath: m_Name
-      value: Text
-      objectReference: {fileID: 0}
-    - target: {fileID: 6002996138025522953, guid: 8703452b5f735d5488751bc3c127f8d1, type: 3}
-      propertyPath: m_Layer
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 7131371705249575224, guid: 8703452b5f735d5488751bc3c127f8d1, type: 3}
-      propertyPath: m_SpriteTilingProperty.drawMode
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7253605555058741698, guid: 8703452b5f735d5488751bc3c127f8d1, type: 3}
-      propertyPath: m_Mass
-      value: 0.225
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1493,14 +1373,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Obj (7)
       objectReference: {fileID: 0}
-    - target: {fileID: 3075774763311826097, guid: 8703452b5f735d5488751bc3c127f8d1, type: 3}
-      propertyPath: m_Layer
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 3317278809850616235, guid: 8703452b5f735d5488751bc3c127f8d1, type: 3}
-      propertyPath: m_Layer
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 4491735885245469364, guid: 8703452b5f735d5488751bc3c127f8d1, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -1544,22 +1416,6 @@ PrefabInstance:
     - target: {fileID: 4491735885245469364, guid: 8703452b5f735d5488751bc3c127f8d1, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6002996138025522953, guid: 8703452b5f735d5488751bc3c127f8d1, type: 3}
-      propertyPath: m_Name
-      value: Text
-      objectReference: {fileID: 0}
-    - target: {fileID: 6002996138025522953, guid: 8703452b5f735d5488751bc3c127f8d1, type: 3}
-      propertyPath: m_Layer
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 7131371705249575224, guid: 8703452b5f735d5488751bc3c127f8d1, type: 3}
-      propertyPath: m_SpriteTilingProperty.drawMode
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7253605555058741698, guid: 8703452b5f735d5488751bc3c127f8d1, type: 3}
-      propertyPath: m_Mass
-      value: 0.225
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1633,14 +1489,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Obj (8)
       objectReference: {fileID: 0}
-    - target: {fileID: 3075774763311826097, guid: 8703452b5f735d5488751bc3c127f8d1, type: 3}
-      propertyPath: m_Layer
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 3317278809850616235, guid: 8703452b5f735d5488751bc3c127f8d1, type: 3}
-      propertyPath: m_Layer
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 4491735885245469364, guid: 8703452b5f735d5488751bc3c127f8d1, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -1684,22 +1532,6 @@ PrefabInstance:
     - target: {fileID: 4491735885245469364, guid: 8703452b5f735d5488751bc3c127f8d1, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6002996138025522953, guid: 8703452b5f735d5488751bc3c127f8d1, type: 3}
-      propertyPath: m_Name
-      value: Text
-      objectReference: {fileID: 0}
-    - target: {fileID: 6002996138025522953, guid: 8703452b5f735d5488751bc3c127f8d1, type: 3}
-      propertyPath: m_Layer
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 7131371705249575224, guid: 8703452b5f735d5488751bc3c127f8d1, type: 3}
-      propertyPath: m_SpriteTilingProperty.drawMode
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7253605555058741698, guid: 8703452b5f735d5488751bc3c127f8d1, type: 3}
-      propertyPath: m_Mass
-      value: 0.225
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1952,7 +1784,7 @@ GameObject:
   - component: {fileID: 1924387498}
   m_Layer: 6
   m_Name: Square
-  m_TagString: Untagged
+  m_TagString: Board
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2081,14 +1913,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Obj (4)
       objectReference: {fileID: 0}
-    - target: {fileID: 3075774763311826097, guid: 8703452b5f735d5488751bc3c127f8d1, type: 3}
-      propertyPath: m_Layer
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 3317278809850616235, guid: 8703452b5f735d5488751bc3c127f8d1, type: 3}
-      propertyPath: m_Layer
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 4491735885245469364, guid: 8703452b5f735d5488751bc3c127f8d1, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -2132,22 +1956,6 @@ PrefabInstance:
     - target: {fileID: 4491735885245469364, guid: 8703452b5f735d5488751bc3c127f8d1, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6002996138025522953, guid: 8703452b5f735d5488751bc3c127f8d1, type: 3}
-      propertyPath: m_Name
-      value: Text
-      objectReference: {fileID: 0}
-    - target: {fileID: 6002996138025522953, guid: 8703452b5f735d5488751bc3c127f8d1, type: 3}
-      propertyPath: m_Layer
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 7131371705249575224, guid: 8703452b5f735d5488751bc3c127f8d1, type: 3}
-      propertyPath: m_SpriteTilingProperty.drawMode
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7253605555058741698, guid: 8703452b5f735d5488751bc3c127f8d1, type: 3}
-      propertyPath: m_Mass
-      value: 0.225
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2350,10 +2158,6 @@ PrefabInstance:
     - target: {fileID: 4491735885245469364, guid: 8703452b5f735d5488751bc3c127f8d1, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7253605555058741698, guid: 8703452b5f735d5488751bc3c127f8d1, type: 3}
-      propertyPath: m_Mass
-      value: 0.225
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
