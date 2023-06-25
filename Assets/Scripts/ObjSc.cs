@@ -21,6 +21,10 @@ public class ObjSc : MonoBehaviour
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         SetObj();
     }
+    private void FixedUpdate()
+    { 
+        GetComponent<BoxCollider2D>().layerOverridePriority = -(int)transform.position.y * 5; 
+    }
     private void OnMouseDown()
     {
         if(!isSelected)

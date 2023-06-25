@@ -9,6 +9,7 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
+    public GameObject objPrefab;
     public Transform objs;
     public LayerMask objLayerMask;
     public Color colorA, colorB, colorC;
@@ -27,6 +28,8 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         mainCamera = Camera.main;
+        Time.timeScale = 2;
+        Initialize();
     }
 
     // Update is called once per frame
@@ -56,17 +59,11 @@ public class GameManager : MonoBehaviour
         AddSelectedObjsArray(obj);
         clickedObj.GetComponent<ObjSc>().SetCondition(1);
     }
+
     public void OnObjSelected(GameObject obj)
     {
         AddSelectedObjsArray(obj);
         obj.GetComponent<ObjSc>().SetCondition(2);
-    }
-
-    private void ReleaseInput()
-    {
-        clickedObj = null;
-        clickedObjId = 0;
-        ResetSelectedObjsArray();
     }
 
     private void AddSelectedObjsArray(GameObject obj)
@@ -76,6 +73,13 @@ public class GameManager : MonoBehaviour
         Array.Resize(ref selectedObjs, newSize);
 
         selectedObjs[newSize - 1] = obj;
+    }
+
+    private void ReleaseInput()
+    {
+        clickedObj = null;
+        clickedObjId = 0;
+        ResetSelectedObjsArray();
     }
 
     private void ResetSelectedObjsArray()
@@ -100,6 +104,7 @@ public class GameManager : MonoBehaviour
     {
         foreach (GameObject obj in selectedObjs)
         {
+            SpawnObj(obj.transform.position);
             Destroy(obj);
         }
 
@@ -127,6 +132,29 @@ public class GameManager : MonoBehaviour
             }
         }
         return r;
+    }
+
+    private void SpawnObj(Vector3 refPoint)
+    {
+        Instantiate(objPrefab, refPoint + Vector3.up * 6f, Quaternion.identity, objs);
+
+    }
+
+    private void Initialize()
+    {
+        Vector2 targetSpawnPoint = objs.GetChild(0).position + Vector3.up*0.5f;
+        float startX = targetSpawnPoint.x;
+        for (int i = 0; i < 10;  i++)
+        {
+            for (int j = 0; j < 9; j++)
+            {
+                Instantiate(objPrefab, targetSpawnPoint, Quaternion.identity, objs);
+                targetSpawnPoint += Vector2.right * 0.5f;
+            }
+            targetSpawnPoint += Vector2.up * 0.5f;
+            targetSpawnPoint.x = startX;
+        }
+        //Instantiate(objPrefab,);
     }
 
     // Reload the current scene to restart the game
