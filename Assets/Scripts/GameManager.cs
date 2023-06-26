@@ -1,11 +1,12 @@
 using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
     public float rows, cols;
-    public GameObject objPrefab;
+    public GameObject objPrefab, vibBut;
     public Transform objs;
     public Transform board;
     public LayerMask objLayerMask;
@@ -141,7 +142,7 @@ public class GameManager : MonoBehaviour
 
     private void SpawnObj(Vector3 refPoint)
     {
-        Instantiate(objPrefab, refPoint + Vector3.up * 6f, Quaternion.identity, objs);
+        Instantiate(objPrefab, refPoint + Vector3.up * (rows/2), Quaternion.identity, objs);
     }
 
     private void Initialize()
@@ -177,6 +178,6 @@ public class GameManager : MonoBehaviour
     public void Vibrating()
     {
         vibrating = !vibrating;
+        vibBut.transform.Find("CondTx").GetComponent<Text>().text = vibrating ? "On" : "Off";
     }
-
 }
