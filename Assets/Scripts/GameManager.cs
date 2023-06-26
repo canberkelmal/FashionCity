@@ -185,6 +185,7 @@ public class GameManager : MonoBehaviour
     public void SetRows()
     {
         rows = rowSlider.value;
+        setPanel.transform.Find("RowTx").GetComponent<Text>().text = "Rows: " + rows.ToString(); 
         board.GetComponent<BoardSc>().Initialize();
         float objXPos = -(cols - 1) * 0.25f;
         objs.GetChild(0).position = board.Find("Buttom").position + new Vector3(objXPos, 0.35f, 0);
@@ -192,6 +193,7 @@ public class GameManager : MonoBehaviour
     public void SetColumns()
     {
         cols = colSlider.value;
+        setPanel.transform.Find("ColTx").GetComponent<Text>().text = "Columns: " + cols.ToString();
         board.GetComponent<BoardSc>().Initialize();
         float objXPos = -(cols - 1) * 0.25f;
         objs.GetChild(0).position = board.Find("Buttom").position + new Vector3(objXPos, 0.35f, 0);

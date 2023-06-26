@@ -3828,7 +3828,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: ROWS
+  m_Text: 'Rows : 12'
 --- !u!222 &713867728
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -6071,7 +6071,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: COLUMNS
+  m_Text: 'Columns : 9'
 --- !u!222 &1166921728
 CanvasRenderer:
   m_ObjectHideFlags: 0
