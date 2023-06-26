@@ -6,19 +6,18 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     public float rows, cols;
-    public GameObject objPrefab, vibBut;
+    public Slider rowSlider, colSlider;
+    public GameObject objPrefab, vibBut, setPanel;
     public Transform objs;
     public Transform board;
     public LayerMask objLayerMask;
     public Color colorA, colorB, colorC;
-    public float selectVibrateDur = 0.2f;
 
     [NonSerialized]
     public int clickedObjId = 0;
     [NonSerialized]
     public Transform[] selectables = new Transform[0];
 
-    private Camera mainCamera;
     private GameObject clickedObj;
     private GameObject[] selectedObjs = new GameObject[0];
     private bool vibrating = false;
@@ -27,9 +26,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        mainCamera = Camera.main;
         Time.timeScale = 2;
-        Initialize();
     }
 
     // Update is called once per frame
@@ -179,5 +176,30 @@ public class GameManager : MonoBehaviour
     {
         vibrating = !vibrating;
         vibBut.transform.Find("CondTx").GetComponent<Text>().text = vibrating ? "On" : "Off";
+        if(vibrating)
+        {
+            Handheld.Vibrate();
+        }
+    }
+
+    public void SetRows()
+    {
+        rows = rowSlider.value;
+        board.GetComponent<BoardSc>().Initialize();
+        float objXPos = -(cols - 1) * 0.25f;
+        objs.GetChild(0).position = board.Find("Buttom").position + new Vector3(objXPos, 0.35f, 0);
+    }
+    public void SetColumns()
+    {
+        cols = colSlider.value;
+        board.GetComponent<BoardSc>().Initialize();
+        float objXPos = -(cols - 1) * 0.25f;
+        objs.GetChild(0).position = board.Find("Buttom").position + new Vector3(objXPos, 0.35f, 0);
+    }
+
+    public void StartGame()
+    {
+        setPanel.SetActive(false);
+        Initialize();
     }
 }

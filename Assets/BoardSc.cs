@@ -19,8 +19,10 @@ public class BoardSc : MonoBehaviour
         cols = gameManager.cols;
         Initialize();
     }
-    private void Initialize()
+    public void Initialize()
     {
+        rows = gameManager.rows;
+        cols = gameManager.cols;
         buttom.localScale = new Vector3 (cols/2 + 0.2f , 0.1f, 1);
         top.localScale = buttom.localScale;
 
