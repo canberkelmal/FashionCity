@@ -81,7 +81,7 @@ public class ObjSc : MonoBehaviour
                 break;
             case 2: // Selected state
                 isSelected = true; 
-                GetComponent<SpriteRenderer>().color = Color.yellow;
+                //GetComponent<SpriteRenderer>().color = Color.yellow;
                 transform.Find("Stroke").gameObject.SetActive(true); 
                 break;
         }

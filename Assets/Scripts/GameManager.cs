@@ -1,14 +1,13 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
+    public float rows, cols;
     public GameObject objPrefab;
     public Transform objs;
+    public Transform board;
     public LayerMask objLayerMask;
     public Color colorA, colorB, colorC;
     public float selectVibrateDur = 0.2f;
@@ -21,6 +20,7 @@ public class GameManager : MonoBehaviour
     private Camera mainCamera;
     private GameObject clickedObj;
     private GameObject[] selectedObjs = new GameObject[0];
+    private bool vibrating = false;
 
 
     // Start is called before the first frame update
@@ -67,7 +67,11 @@ public class GameManager : MonoBehaviour
 
     private void AddSelectedObjsArray(GameObject obj)
     {
-        VibrateForSeconds(selectVibrateDur);
+        if (vibrating)
+        {
+            Handheld.Vibrate();
+        }
+
         SetSelectables(obj.transform);
         int newSize = (selectedObjs != null) ? selectedObjs.Length + 1 : 1;
         Array.Resize(ref selectedObjs, newSize);
@@ -142,31 +146,26 @@ public class GameManager : MonoBehaviour
 
     private void Initialize()
     {
-        Vector2 targetSpawnPoint = objs.GetChild(0).position + Vector3.up*0.6f;
-        float startX = targetSpawnPoint.x;
-        for (int i = 0; i < 10;  i++)
+        float objXPos = -(cols - 1) * 0.25f;
+        objs.GetChild(0).position = board.Find("Buttom").position + new Vector3(objXPos, 0.35f, 0);
+
+        Vector2 targetSpawnPoint = objs.GetChild(0).position + (Vector3.right * 0.5f);
+        float startX = objs.GetChild(0).position.x;
+
+        for (int i = 0; i < rows;  i++)
         {
-            for (int j = 0; j < 9; j++)
+            for (int j = 0; j < cols; j++)
             {
+                if(i == 0 && j==0)
+                {
+                    j++;
+                }
                 Instantiate(objPrefab, targetSpawnPoint, Quaternion.identity, objs);
                 targetSpawnPoint += Vector2.right * 0.5f;
             }
             targetSpawnPoint += Vector2.up * 0.6F;
             targetSpawnPoint.x = startX;
         }
-        //Instantiate(objPrefab,);
-    }
-
-    private void VibrateForSeconds(float duration)
-    {
-        Handheld.Vibrate();
-        Invoke("StopVibration", duration);
-
-    }
-
-    private void StopVibration()
-    {
-        Handheld.Vibrate();
     }
 
     // Reload the current scene to restart the game
@@ -174,4 +173,10 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
+
+    public void Vibrating()
+    {
+        vibrating = !vibrating;
+    }
+
 }
