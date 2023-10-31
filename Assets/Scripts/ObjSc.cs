@@ -22,7 +22,7 @@ public class ObjSc : MonoBehaviour
     private Color defColor;
     private Text lvTx;
     private Image objIcon;
-    private Transform targetObj;
+    private Transform targetObj, firstObj;
 
     void Awake()
     {
@@ -37,7 +37,7 @@ public class ObjSc : MonoBehaviour
         if(movingToFirst)
         {
             transform.position = Vector3.MoveTowards(transform.position, targetObj.position, moveSpeed * Time.deltaTime);
-            if(transform.position == targetObj.position)
+            if(transform.position == firstObj.position)
             {
                 movingToFirst = false;
                 //Destroy(gameObject);
@@ -46,10 +46,11 @@ public class ObjSc : MonoBehaviour
         }
     }
 
-    public void MoveToFirst(Transform target)
+    public void MoveToFirst(Transform target, Transform first)
     {
-        movingToFirst = true;
         targetObj = target;
+        firstObj = first;
+        movingToFirst = true;
     }
 
     public bool IsMovingToFirst()
@@ -97,7 +98,7 @@ public class ObjSc : MonoBehaviour
             objId += addLevel;
         }
         objLevel = objId % 100;
-
+        SetCondition(0);
         SetObjIcon();
     }
 

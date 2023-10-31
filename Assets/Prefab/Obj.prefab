@@ -219,7 +219,7 @@ MonoBehaviour:
   objId: 1
   objClass: 0
   objLevel: 0
-  moveSpeed: 5
+  moveSpeed: 7
   emptyColor: {r: 0, g: 0, b: 0, a: 0}
   clickedColor: {r: 0.042670462, g: 0.5943396, b: 0, a: 1}
   selectedColor: {r: 0.5090335, g: 0.8773585, b: 0.7235286, a: 1}

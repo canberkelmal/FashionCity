@@ -38,8 +38,6 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //Time.timeScale = 2;
-        score = PlayerPrefs.GetInt("Score", 0);
     }
 
     // Update is called once per frame
@@ -100,14 +98,14 @@ public class GameManager : MonoBehaviour
 
     private void ResetSelectedObjsArray()
     {
-        foreach (GameObject obj in selectedObjs)
+        for (int i = 1; i < selectedObjs.Length; i++)
         {
-            obj.GetComponent<ObjSc>().SetCondition(0);
+            selectedObjs[i].GetComponent<ObjSc>().SetCondition(0);
         }
 
         if (selectedObjs.Length >= 3)
         {
-            SetScore(selectedObjs.Length);
+            //SetScore(selectedObjs.Length);
             selectedCount = selectedObjs.Length;
             StartMerge();
         }
@@ -118,8 +116,7 @@ public class GameManager : MonoBehaviour
     }
 
     private void StartMerge()
-    {
-        
+    {        
         // Create new obj instead of mergeds.
         for (int i = 1; i < selectedObjs.Length; i++)
         {
@@ -132,7 +129,7 @@ public class GameManager : MonoBehaviour
         {
             GameObject obj = selectedObjs[i];
             obj.GetComponent<BoxCollider2D>().isTrigger = true;
-            obj.GetComponent<ObjSc>().MoveToFirst(selectedObjs[0].transform);
+            obj.GetComponent<ObjSc>().MoveToFirst(selectedObjs[i-1].transform, selectedObjs[0].transform); 
         }
     }
 
@@ -156,8 +153,6 @@ public class GameManager : MonoBehaviour
 
     private void DestroySelecteds()
     {
-        GameObject firstObj = selectedObjs[0];
-
         for (int i = 1; i < selectedObjs.Length; i++)
         {
             GameObject obj = selectedObjs[i];
@@ -185,11 +180,9 @@ public class GameManager : MonoBehaviour
         {
             addLevelCount = 1;
         }
-        selectedObjs[0].GetComponent<ObjSc>().IncreaseObjLevel(addLevelCount);
 
-        // Set selected objs parameters to default
-        selectedCount = 0;
-        selectedObjs = new GameObject[0];
+        selectedObjs[0].GetComponent<ObjSc>().IncreaseObjLevel(addLevelCount);
+        ResetSelecteds();
     }
 
     private void SetObjKinematic(bool kin)
@@ -200,7 +193,15 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void SetScore(int numberOfObj)
+    // Set selected objs parameters to default
+    private void ResetSelecteds()
+    {
+        selectedCount = 0;
+        selectedObjs = new GameObject[0];
+    }
+
+    // Set score scripts
+    /*private void SetScore(int numberOfObj)
     {
         int addScore = numberOfObj * (numberOfObj % addScoreMinMultiplier);
         score += addScore;
@@ -220,7 +221,7 @@ public class GameManager : MonoBehaviour
         GameObject spawnedText = Instantiate(addScorePrefab, spawnPosition, Quaternion.identity, scoreTx.gameObject.transform);
 
         spawnedText.GetComponent<Text>().text = "+" + addScore.ToString();
-    }
+    }*/
 
     private void SetSelectables(Transform checkedObj)
     {
