@@ -7,11 +7,22 @@ public class GameManager : MonoBehaviour
 {
     public float rows, cols;
     public Slider rowSlider, colSlider;
-    public GameObject objPrefab, vibBut, setPanel;
+    public GameObject objPrefab, addScorePrefab, vibBut, setPanel;
+    public Text scoreTx;
     public Transform objs;
     public Transform board;
     public LayerMask objLayerMask;
     public Color colorA, colorB, colorC;
+    public int score = 0;
+    public int addScoreMinMultiplier = 3;
+    public int itemSpawnMaxLevel = 4;
+    public int itemMaxLevel = 4;
+    public int itemMaxClass = 11;
+    public Sprite[] class10Items = new Sprite[0];
+    public Sprite[] class11Items = new Sprite[0];
+    public Sprite[] class12Items = new Sprite[0];
+
+
 
     [NonSerialized]
     public int clickedObjId = 0;
@@ -19,14 +30,16 @@ public class GameManager : MonoBehaviour
     public Transform[] selectables = new Transform[0];
 
     private GameObject clickedObj;
-    private GameObject[] selectedObjs = new GameObject[0];
+    public GameObject[] selectedObjs = new GameObject[0];
     private bool vibrating = false;
+    private int selectedCount = 0;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        Time.timeScale = 2;
+        //Time.timeScale = 2;
+        score = PlayerPrefs.GetInt("Score", 0);
     }
 
     // Update is called once per frame
@@ -92,26 +105,121 @@ public class GameManager : MonoBehaviour
             obj.GetComponent<ObjSc>().SetCondition(0);
         }
 
-        if(selectedObjs.Length >= 2)
+        if (selectedObjs.Length >= 3)
         {
-            DestroySelecteds();
+            SetScore(selectedObjs.Length);
+            selectedCount = selectedObjs.Length;
+            StartMerge();
         }
         else
         {
             selectedObjs = new GameObject[0];
-        }
+        }        
+    }
+
+    private void StartMerge()
+    {
         
+        // Create new obj instead of mergeds.
+        for (int i = 1; i < selectedObjs.Length; i++)
+        {
+            SpawnObj(selectedObjs[i].transform.position);
+        }
+        SetObjKinematic(true);
+
+        // Close colliders and start merge movement of objects.
+        for (int i = 1; i < selectedObjs.Length; i++)
+        {
+            GameObject obj = selectedObjs[i];
+            obj.GetComponent<BoxCollider2D>().isTrigger = true;
+            obj.GetComponent<ObjSc>().MoveToFirst(selectedObjs[0].transform);
+        }
+    }
+
+    public void CheckMergeDone()
+    {        
+        bool isDone = true;
+        for (int i = 1; i < selectedObjs.Length; i++)
+        {
+            if (selectedObjs[i].GetComponent<ObjSc>().IsMovingToFirst())
+            {
+                isDone = false;
+                break;
+            }
+        }
+
+        if (isDone)
+        {
+            DestroySelecteds();
+        }
     }
 
     private void DestroySelecteds()
     {
-        foreach (GameObject obj in selectedObjs)
+        GameObject firstObj = selectedObjs[0];
+
+        for (int i = 1; i < selectedObjs.Length; i++)
         {
-            SpawnObj(obj.transform.position);
+            GameObject obj = selectedObjs[i];
             Destroy(obj);
         }
 
+        SetMergedObjLevel();
+
+        SetObjKinematic(false);
+    }
+
+    private void SetMergedObjLevel()
+    {
+        // Set level for the merged obj
+        int addLevelCount;
+        if (selectedCount >= 7)
+        {
+            addLevelCount = 3;
+        }
+        else if (selectedCount >= 5)
+        {
+            addLevelCount = 2;
+        }
+        else
+        {
+            addLevelCount = 1;
+        }
+        selectedObjs[0].GetComponent<ObjSc>().IncreaseObjLevel(addLevelCount);
+
+        // Set selected objs parameters to default
+        selectedCount = 0;
         selectedObjs = new GameObject[0];
+    }
+
+    private void SetObjKinematic(bool kin)
+    {
+        foreach(Transform obj in objs)
+        {
+            obj.gameObject.GetComponent<Rigidbody2D>().simulated = !kin; 
+        }
+    }
+
+    private void SetScore(int numberOfObj)
+    {
+        int addScore = numberOfObj * (numberOfObj % addScoreMinMultiplier);
+        score += addScore;
+        PlayerPrefs.SetInt("Score", score);
+        scoreTx.text = score.ToString();
+        SpawnScoreObj(addScore);
+    }
+
+    private void SpawnScoreObj(int addScore)
+    {
+        float randomAngle = UnityEngine.Random.Range(210f, 330f);
+        float radianAngle = randomAngle * Mathf.Deg2Rad;
+
+        Vector3 centerPosition = scoreTx.gameObject.GetComponent<RectTransform>().position;
+        Vector3 spawnPosition = centerPosition + new Vector3(Mathf.Cos(radianAngle) * 144, Mathf.Sin(radianAngle) * 144, 0);
+
+        GameObject spawnedText = Instantiate(addScorePrefab, spawnPosition, Quaternion.identity, scoreTx.gameObject.transform);
+
+        spawnedText.GetComponent<Text>().text = "+" + addScore.ToString();
     }
 
     private void SetSelectables(Transform checkedObj)
@@ -139,7 +247,23 @@ public class GameManager : MonoBehaviour
 
     private void SpawnObj(Vector3 refPoint)
     {
-        Instantiate(objPrefab, refPoint + Vector3.up * (rows/2), Quaternion.identity, objs);
+        GameObject spawnedObj = Instantiate(objPrefab, refPoint + Vector3.up * (rows/2), Quaternion.identity, objs);
+    }
+
+    public Sprite GetIcon(int id)
+    {
+        Sprite returnIcon = null;
+
+        if( id / 100 == 10 )
+        {
+            returnIcon = class10Items[(id%100)-1];
+        }
+        else if( id / 100 == 11)
+        {
+            returnIcon = class11Items[(id % 100) - 1];
+        }
+
+        return returnIcon;
     }
 
     private void Initialize()
