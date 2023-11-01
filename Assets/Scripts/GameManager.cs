@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour
     public Sprite[] class10Items = new Sprite[0];
     public Sprite[] class11Items = new Sprite[0];
     public Sprite[] class12Items = new Sprite[0];
+    public LineRenderer lineRenderer;
 
 
 
@@ -34,12 +35,6 @@ public class GameManager : MonoBehaviour
     private bool vibrating = false;
     private int selectedCount = 0;
 
-
-    // Start is called before the first frame update
-    void Start()
-    {
-    }
-
     // Update is called once per frame
     void Update()
     {
@@ -50,7 +45,7 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetMouseButtonUp(0))
         {
-            ReleaseInput();
+            ReleaseInput(); 
         }
 
         // Restart the game when the "R" key is pressed
@@ -70,23 +65,49 @@ public class GameManager : MonoBehaviour
 
     public void OnObjSelected(GameObject obj)
     {
+        lineRenderer.enabled = true;
         AddSelectedObjsArray(obj);
         obj.GetComponent<ObjSc>().SetCondition(2);
     }
 
     private void AddSelectedObjsArray(GameObject obj)
     {
-        if (vibrating)
-        {
-            Handheld.Vibrate();
-        }
-
         SetSelectables(obj.transform);
         int newSize = (selectedObjs != null) ? selectedObjs.Length + 1 : 1;
         Array.Resize(ref selectedObjs, newSize);
 
         selectedObjs[newSize - 1] = obj;
+        SetSelectLine();
+    }
+     
+    public void RewindSelecteds(GameObject onMouseObj)
+    {
+        SetSelectables(onMouseObj.transform);
 
+        GameObject[] tempSelectedObjs = new GameObject[0];
+        bool foundTheObj = false;
+        for(int i = 0; i < selectedObjs.Length; i++)
+        {
+            GameObject obj = selectedObjs[i];
+            if(foundTheObj)
+            {
+                obj.GetComponent<ObjSc>().SetCondition(0);
+            }
+            else
+            {
+                int newTempSize = tempSelectedObjs.Length+1;
+                Array.Resize(ref tempSelectedObjs, newTempSize);
+
+                tempSelectedObjs[newTempSize - 1] = obj;
+            }
+
+            if (obj == onMouseObj)
+            {
+                foundTheObj = true;
+            }
+        }
+        selectedObjs = tempSelectedObjs;
+        SetSelectLine();
     }
 
     private void ReleaseInput()
@@ -94,6 +115,7 @@ public class GameManager : MonoBehaviour
         clickedObj = null;
         clickedObjId = 0;
         ResetSelectedObjsArray();
+        lineRenderer.enabled = false;
     }
 
     private void ResetSelectedObjsArray()
@@ -111,6 +133,10 @@ public class GameManager : MonoBehaviour
         }
         else
         {
+            for (int i = 0; i < selectedObjs.Length; i++)
+            {
+                selectedObjs[i].GetComponent<ObjSc>().SetCondition(0);
+            }
             selectedObjs = new GameObject[0];
         }        
     }
@@ -231,6 +257,16 @@ public class GameManager : MonoBehaviour
         {
             selectables[i] = selectablesColliders[i].transform;
         }
+    }
+    public void SetSelectLine()
+    {
+        Vector3[] points = new Vector3[selectedObjs.Length];
+        for(int i = 0; i < points.Length; i++)
+        { 
+            points[i] = selectedObjs[i].transform.position;
+        }
+        lineRenderer.positionCount = points.Length;
+        lineRenderer.SetPositions(points);
     }
 
     public bool CheckSelectable(Transform obj)

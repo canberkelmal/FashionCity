@@ -76,6 +76,10 @@ public class ObjSc : MonoBehaviour
         {
             gameManager.OnObjSelected(gameObject);
         }
+        else if(isSelected)
+        {
+            gameManager.RewindSelecteds(gameObject);
+        }
     }
 
     public void SetObjRandom()
