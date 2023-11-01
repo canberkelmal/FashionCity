@@ -18,16 +18,18 @@ public class ObjSc : MonoBehaviour
     [NonSerialized]
     public bool isSelected = false;
     private bool movingToFirst = false;
+    private bool shuffling = false;
     private GameManager gameManager;
     private Color defColor;
     private Text lvTx;
-    private Image objIcon;
+    private SpriteRenderer objIcon;
     private Transform targetObj, firstObj;
+    private Vector3 shuffleTargetPos;
 
     void Awake()
     {
         //lvTx = transform.Find("Canvas").Find("LevelTx").GetComponent<Text>();
-        objIcon = transform.Find("Canvas").Find("ObjIcon").GetComponent<Image>();
+        objIcon = transform.Find("ObjIcon").GetComponent<SpriteRenderer>();
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         SetObjRandom();
     }
@@ -40,8 +42,17 @@ public class ObjSc : MonoBehaviour
             if(transform.position == firstObj.position)
             {
                 movingToFirst = false;
-                //Destroy(gameObject);
                 gameManager.CheckMergeDone();
+            }
+        }
+
+        else if(shuffling)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, shuffleTargetPos, moveSpeed * 2 * Time.deltaTime);
+            if (transform.position == shuffleTargetPos)
+            {
+                shuffling = false;
+                gameManager.CheckShuffleDone();
             }
         }
     }
@@ -52,16 +63,20 @@ public class ObjSc : MonoBehaviour
         firstObj = first;
         movingToFirst = true;
     }
+    public void ShuffleTo(Vector3 target)
+    {
+        shuffleTargetPos = target;
+        shuffling = true;
+    }
 
     public bool IsMovingToFirst()
     {
         return movingToFirst;
     }
-
-    /*private void OnCollisionEnter2D(Collision2D collision)
+    public bool IsShuffling()
     {
-        GetComponent<BoxCollider2D>().layerOverridePriority = -(int)(transform.position.y * 25);
-    }*/
+        return shuffling;
+    }
     private void OnMouseDown()
     {
         if(!isSelected)
@@ -109,7 +124,6 @@ public class ObjSc : MonoBehaviour
     public void SetObjIcon()
     {
         objIcon.sprite = gameManager.GetIcon(objId);
-        //lvTx.text = objLevel.ToString();
     }
 
     public void SetCondition(int condition)
@@ -120,21 +134,17 @@ public class ObjSc : MonoBehaviour
             case 0: // Default state
                 isSelected = false;
                 GetComponent<SpriteRenderer>().color = emptyColor;
-                //transform.Find("Stroke").gameObject.SetActive(false);
                 break;
             case 1: // Clicked state
                 isSelected = true;
                 GetComponent<SpriteRenderer>().color = clickedColor;
-                //transform.Find("Stroke").gameObject.SetActive(true);
                 break;
             case 2: // Selected state
                 isSelected = true;
-                Color setColor = clickedColor / gameManager.selectedObjs.Length;
-                setColor.a = 1;
-                GetComponent<SpriteRenderer>().color = setColor;
-                //GetComponent<SpriteRenderer>().color = selectedColor;
-                //transform.Find("Stroke").gameObject.SetActive(true); 
                 break;
+                //Color setColor = clickedColor / gameManager.selectedObjs.Length;
+                //setColor.a = 1;
+                //GetComponent<SpriteRenderer>().color = setColor;
         }
     }
 }

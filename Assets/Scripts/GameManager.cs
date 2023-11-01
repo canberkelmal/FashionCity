@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     public GameObject objPrefab, addScorePrefab, vibBut, setPanel;
     public Text scoreTx;
     public Transform objs;
+    public Transform boardTiles;
     public Transform board;
     public LayerMask objLayerMask;
     public Color colorA, colorB, colorC;
@@ -21,6 +22,7 @@ public class GameManager : MonoBehaviour
     public Sprite[] class10Items = new Sprite[0];
     public Sprite[] class11Items = new Sprite[0];
     public Sprite[] class12Items = new Sprite[0];
+    public GameObject[] tileSquares = new GameObject[2];
     public LineRenderer lineRenderer;
 
 
@@ -29,6 +31,8 @@ public class GameManager : MonoBehaviour
     public int clickedObjId = 0;
     [NonSerialized]
     public Transform[] selectables = new Transform[0];
+    [NonSerialized]
+    public bool controller = true;
 
     private GameObject clickedObj;
     public GameObject[] selectedObjs = new GameObject[0];
@@ -38,7 +42,10 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        InputManager();
+        if(controller)
+        {
+            InputManager();
+        }
     }
 
     private void InputManager()
@@ -139,10 +146,11 @@ public class GameManager : MonoBehaviour
             }
             selectedObjs = new GameObject[0];
         }        
-    }
+    } 
 
     private void StartMerge()
-    {        
+    {
+        controller = false;
         // Create new obj instead of mergeds.
         for (int i = 1; i < selectedObjs.Length; i++)
         {
@@ -173,6 +181,7 @@ public class GameManager : MonoBehaviour
 
         if (isDone)
         {
+            controller = true;
             DestroySelecteds();
         }
     }
@@ -210,6 +219,67 @@ public class GameManager : MonoBehaviour
         selectedObjs[0].GetComponent<ObjSc>().IncreaseObjLevel(addLevelCount);
         ResetSelecteds();
     }
+    public void ShuffleObjects()
+    {
+        if (controller)
+        {
+            controller = false;
+            Vector3[] ExistPositions = new Vector3[objs.childCount];
+            for (int i = 0; i < objs.childCount; i++)
+            {
+                ExistPositions[i] = objs.GetChild(i).position;
+            }
+            Vector3[] RandomPositions = new Vector3[ExistPositions.Length];
+
+            // X dizisinin elemanlarýný kopyalama
+            Array.Copy(ExistPositions, RandomPositions, ExistPositions.Length);
+
+            // Fisher-Yates shuffle algoritmasý kullanarak diziyi karýþtýrma
+            System.Random rng = new System.Random(); // Rastgele bir sayý üretici
+            int n = RandomPositions.Length;
+             
+            while (n > 1)
+            {
+                n--;
+                int k = rng.Next(n + 1);
+                Vector3 value = RandomPositions[k];
+                RandomPositions[k] = RandomPositions[n];
+                RandomPositions[n] = value;
+            }
+
+            SetObjKinematic(true);
+            // Close colliders and start shuffle movement of objects.
+            for (int i = 0; i < objs.childCount; i++)
+            {
+                GameObject obj = objs.GetChild(i).gameObject;
+                obj.GetComponent<BoxCollider2D>().isTrigger = true;
+                obj.GetComponent<ObjSc>().ShuffleTo(RandomPositions[i]);
+            }
+        }
+    }
+
+    public void CheckShuffleDone()
+    {
+        bool isDone = true;
+        for (int i = 0; i < objs.childCount; i++)
+        {
+            if (objs.GetChild(i).gameObject.GetComponent<ObjSc>().IsShuffling()) 
+            {
+                isDone = false;
+                break;
+            }
+        }
+
+        if (isDone)
+        {
+            controller = true;
+            for (int i = 0; i < objs.childCount; i++)
+            {
+                objs.GetChild(i).gameObject.GetComponent<BoxCollider2D>().isTrigger = false;
+            }
+            SetObjKinematic(false);
+        }
+    }
 
     private void SetObjKinematic(bool kin)
     {
@@ -225,29 +295,6 @@ public class GameManager : MonoBehaviour
         selectedCount = 0;
         selectedObjs = new GameObject[0];
     }
-
-    // Set score scripts
-    /*private void SetScore(int numberOfObj)
-    {
-        int addScore = numberOfObj * (numberOfObj % addScoreMinMultiplier);
-        score += addScore;
-        PlayerPrefs.SetInt("Score", score);
-        scoreTx.text = score.ToString();
-        SpawnScoreObj(addScore);
-    }
-
-    private void SpawnScoreObj(int addScore)
-    {
-        float randomAngle = UnityEngine.Random.Range(210f, 330f);
-        float radianAngle = randomAngle * Mathf.Deg2Rad;
-
-        Vector3 centerPosition = scoreTx.gameObject.GetComponent<RectTransform>().position;
-        Vector3 spawnPosition = centerPosition + new Vector3(Mathf.Cos(radianAngle) * 144, Mathf.Sin(radianAngle) * 144, 0);
-
-        GameObject spawnedText = Instantiate(addScorePrefab, spawnPosition, Quaternion.identity, scoreTx.gameObject.transform);
-
-        spawnedText.GetComponent<Text>().text = "+" + addScore.ToString();
-    }*/
 
     private void SetSelectables(Transform checkedObj)
     {
@@ -350,6 +397,7 @@ public class GameManager : MonoBehaviour
         board.GetComponent<BoardSc>().Initialize();
         float objXPos = -(cols - 1) * 0.25f;
         objs.GetChild(0).position = board.Find("Buttom").position + new Vector3(objXPos, 0.35f, 0);
+        SetTileSquares();
     }
     public void SetColumns()
     {
@@ -358,11 +406,61 @@ public class GameManager : MonoBehaviour
         board.GetComponent<BoardSc>().Initialize();
         float objXPos = -(cols - 1) * 0.25f;
         objs.GetChild(0).position = board.Find("Buttom").position + new Vector3(objXPos, 0.35f, 0);
+        SetTileSquares();
+    }
+
+    public void SetTileSquares()
+    {
+        Vector2 targetSpawnPoint = objs.GetChild(0).position;
+        float startX = objs.GetChild(0).position.x;
+        GameObject placedTile = null;
+
+        foreach (Transform tile in boardTiles)
+        { 
+            Destroy(tile.gameObject);
+        }
+
+        for (int i = 0; i < rows; i++)
+        {
+            for (int j = 0; j < cols; j++)
+            {
+                placedTile = (i+j)%2 == 0 ? tileSquares[0] : tileSquares[1];
+                Instantiate(placedTile, targetSpawnPoint, Quaternion.identity, boardTiles);
+                targetSpawnPoint += Vector2.right * 0.5f;
+            }
+            targetSpawnPoint += Vector2.up * 0.5F;
+            targetSpawnPoint.x = startX;
+        }
+
     }
 
     public void StartGame()
     {
+        SetTileSquares(); 
         setPanel.SetActive(false);
         Initialize();
     }
+
+    // Set score scripts
+    /*private void SetScore(int numberOfObj)
+    {
+        int addScore = numberOfObj * (numberOfObj % addScoreMinMultiplier);
+        score += addScore;
+        PlayerPrefs.SetInt("Score", score);
+        scoreTx.text = score.ToString();
+        SpawnScoreObj(addScore);
+    }
+
+    private void SpawnScoreObj(int addScore)
+    {
+        float randomAngle = UnityEngine.Random.Range(210f, 330f);
+        float radianAngle = randomAngle * Mathf.Deg2Rad;
+
+        Vector3 centerPosition = scoreTx.gameObject.GetComponent<RectTransform>().position;
+        Vector3 spawnPosition = centerPosition + new Vector3(Mathf.Cos(radianAngle) * 144, Mathf.Sin(radianAngle) * 144, 0);
+
+        GameObject spawnedText = Instantiate(addScorePrefab, spawnPosition, Quaternion.identity, scoreTx.gameObject.transform);
+
+        spawnedText.GetComponent<Text>().text = "+" + addScore.ToString();
+    }*/
 }

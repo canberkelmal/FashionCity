@@ -8,7 +8,7 @@ public class BoardSc : MonoBehaviour
     private Transform buttom, top, left, right;
     private float rows,cols;
     // Start is called before the first frame update
-    void Awake()
+    void Start()
     {
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         buttom = transform.Find("Buttom");
